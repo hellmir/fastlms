@@ -304,7 +304,11 @@ public class MemberServiceImpl implements MemberService {
             grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         }
 
-        return new User(member.getUserId(), member.getPassword(), grantedAuthorities);
+        member.setLastLoginDt(LocalDateTime.now());
+
+        Member savedMember = memberRepository.save(member);
+
+        return new User(savedMember.getUserId(), savedMember.getPassword(), grantedAuthorities);
 
     }
 

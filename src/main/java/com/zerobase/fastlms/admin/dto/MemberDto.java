@@ -21,6 +21,7 @@ public class MemberDto {
     String password;
     LocalDateTime regDt;
     LocalDateTime udtDt;
+    LocalDateTime lastLoginDt;
 
     boolean emailAuthYn;
     LocalDateTime emailAuthDt;

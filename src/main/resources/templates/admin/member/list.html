@@ -34,6 +34,7 @@
         }
 
 
+
     </style>
 </head>
 <body>
@@ -67,6 +68,7 @@
             <th>이메일 인증 여부</th>
             <th>가입일</th>
             <th>관리자여부</th>
+            <th>마지막 로그인 일자</th>
         </tr>
         </thead>
         <tbody>
@@ -90,6 +92,7 @@
                 <p th:if="${x.adminYn}">Y</p>
                 <p th:if="${x.adminYn eq false}">N</p>
             </td>
+            <td th:text="${x.lastLoginDt != null ? x.lastLoginDt.format(formatter) : ''}">2021.09.21 12:24</td>
         </tr>
         </tbody>
     </table>

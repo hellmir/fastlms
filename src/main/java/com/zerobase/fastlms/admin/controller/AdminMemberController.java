@@ -22,6 +22,7 @@ import java.util.List;
 public class AdminMemberController extends BaseController {
 
     private final MemberService memberService;
+    private final LoginHistoryService loginHistoryService;
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm");
 
@@ -53,9 +54,14 @@ public class AdminMemberController extends BaseController {
         parameter.init();
 
         MemberDto member = memberService.detail(parameter.getUserId());
+        List<LoginHistoryDto> loginHistories = loginHistoryService.getLoginHistory(parameter.getUserId());
+
         model.addAttribute("member", member);
+        model.addAttribute("loginHistories", loginHistories);
+        model.addAttribute("formatter", formatter);
 
         return "admin/member/detail";
+
     }
 
     @PostMapping("/admin/member/status.do")

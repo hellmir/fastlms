@@ -14,6 +14,7 @@
 
 
 
+
     </style>
 </head>
 <body>
@@ -106,6 +107,25 @@
 
 </div>
 
+<table>
+    <thead>
+    <tr style="background-color: black; color: white;">
+        <th>NO</th>
+        <th>로그인 일자</th>
+        <th>접속 IP</th>
+        <th>접속 UserAgent</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="loginHistory, iterStat : ${loginHistories}"
+        th:style="${iterStat.odd} ? 'background-color: #e6e6e6;' : 'background-color: #f2f2f2;'">
+        <td th:text="${iterStat.size - iterStat.count + 1}"></td>
+        <td th:text="${loginHistory.loginDt.format(formatter)}"></td>
+        <td th:text="${loginHistory.clientIp}"></td>
+        <td th:text="${loginHistory.userAgent}"></td>
+    </tr>
+    </tbody>
+</table>
 
 </body>
 </html>

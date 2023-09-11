@@ -26,9 +26,13 @@ public class BannerServiceImpl implements BannerService {
 
     private final BannerRepository bannerRepository;
 
+    private static final Logger log = LoggerFactory.getLogger(BannerService.class);
+
     @Override
     @Transactional(isolation = READ_COMMITTED, readOnly = true, timeout = 10)
     public List<BannerDto> list() {
+
+        log.info("Beginning to retrieve all banners");
 
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
@@ -36,6 +40,9 @@ public class BannerServiceImpl implements BannerService {
         List<Banner> banners = bannerRepository.findAll();
 
         stopWatch.stop();
+
+        log.info("All banners retrieved successfully\n Retrieving task execution time: {} ms",
+                stopWatch.getTotalTimeMillis());
 
         return banners.stream()
                 .map(BannerDto::of)
@@ -45,6 +52,8 @@ public class BannerServiceImpl implements BannerService {
 
     @Override
     public void add(BannerInput parameter) {
+
+        log.info("Beginning to save banner for image: {}", parameter.getBannerName());
 
         boolean isExists = bannerRepository.existsByBannerName(parameter.getBannerName());
 
@@ -56,15 +65,21 @@ public class BannerServiceImpl implements BannerService {
             bannerRepository.save(Banner.of(parameter));
         } catch (IOException e) {
 
+            log.error("IOException occurred while converting the image file: ", e);
+
             throw new FailedToConvertImageFileException
                     ("이미지 파일 변환에 실패했습니다. bannerName: " + parameter.getBannerName());
 
         }
 
+        log.info("Banner saved successfully for image: {}", parameter.getBannerName());
+
     }
 
     @Override
     public void update(String bannerName, BannerInput parameter) {
+
+        log.info("Beginning to update banner for image: {}", bannerName);
 
         Banner banner = bannerRepository.findByBannerName(bannerName)
                 .orElseThrow(() -> new EntityNotFoundException(
@@ -84,11 +99,15 @@ public class BannerServiceImpl implements BannerService {
 
         }
 
+        log.info("Banner updated successfully for image: {}", updatedBanner.getBannerName());
+
     }
 
     @Override
     @Transactional(isolation = READ_COMMITTED, timeout = 10)
     public void deleteSelectedBanners(List<String> bannerNames) {
+
+        log.info("Beginning to delete selected banners");
 
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
@@ -102,6 +121,9 @@ public class BannerServiceImpl implements BannerService {
         bannerRepository.deleteByBannerNameIn(bannerNames);
 
         stopWatch.stop();
+
+        log.info("Selected banners deleted successfully\n Deleting task execution time: {} ms",
+                stopWatch.getTotalTimeMillis());
 
     }
 

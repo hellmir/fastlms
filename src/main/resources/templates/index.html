@@ -3,14 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <title>메인 페이지</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <style>
+        .home__slider {
+            max-width: 800px;
+        }
+
+        .home__slider img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .bx-wrapper .bx-pager {
+            text-align: center;
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+    </style>
 </head>
 <body>
 <h1>메인 페이지 </h1>
 <div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
 
-<div>
-    <img src="/files/2021/09/05/6e5170576b0c4c29879e5334dfccab2d.png"/>
+<div class="home__slider">
+    <div class="slider">
+        <a th:each="banner : ${banners}" th:href="${banner.linkedUrl}" th:target="${banner.targetInfo}">
+            <img th:src="'data:image/png;base64,' + ${banner.imageFile}" th:alt="${banner.altText}">
+        </a>
+    </div>
 </div>
+
+<script>
+$(document).ready(function(){
+    $('.slider').bxSlider({
+        mode: 'horizontal',
+        pager: true,
+        auto: true,
+        pause: 4000,
+        speed: 500
+    });
+});
+
+</script>
 
 </body>
 </html>

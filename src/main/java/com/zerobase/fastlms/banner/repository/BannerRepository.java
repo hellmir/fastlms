@@ -18,4 +18,6 @@ public interface BannerRepository extends JpaRepository<Banner, Long> {
 
     void deleteByBannerNameIn(List<String> bannerNames);
 
+    List<Banner> findByIsDisplayedOnFrontOrderBySortOrderAsc(boolean isDisplayedOnFront);
+
 }

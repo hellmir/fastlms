@@ -7,6 +7,6 @@ import java.util.List;
 public interface LoginHistoryService {
     void saveLoginHistory(String username, String clientIp, String userAgent);
 
-    List<LoginHistoryDto> getLoginHistory(String username);
+    List<LoginHistoryDto> getAllLoginHistories(String username);
 
 }

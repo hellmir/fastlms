@@ -36,7 +36,7 @@ public class LoginHistoryServiceImpl implements LoginHistoryService {
     }
 
     @Override
-    public List<LoginHistoryDto> getLoginHistory(String username) {
+    public List<LoginHistoryDto> getAllLoginHistories(String username) {
 
         PageRequest pageRequest = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "loginDt"));
 

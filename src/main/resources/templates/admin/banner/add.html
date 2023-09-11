@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자 화면 </title>
+    <style>
+        table, th, td {
+            width: 100%;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th {
+            width: 200px;
+        }
+        td {
+            width: auto;
+        }
+        .link-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .link-container a {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+<div th:replace="/fragments/layout.html :: fragment-admin-body-menu"></div>
+<h1>배너 관리 - 배너 등록</h1>
+
+<form method="post" enctype="multipart/form-data">
+
+    <table>
+        <tr>
+            <th>배너명</th>
+            <td><input type="text" name="bannerName" placeholder="배너명 입력"></td>
+        </tr>
+        <tr>
+            <th>배너 파일</th>
+            <td>
+                <input type="file" id="bannerFile" name="imageFile">
+                <label for="bannerFile"></label>
+                <span id="selectedFileName"></span>
+            </td>
+        </tr>
+        <tr>
+            <th>링크 주소</th>
+            <td><input type="text" name="linkedUrl" placeholder="링크 주소 입력"></td>
+        </tr>
+        <tr>
+            <th>오픈 방법</th>
+            <td>
+                <select name="targetInfo">
+                    <option value="" disabled selected>오픈 방법 선택</option>
+                    <option value="_blank">새 창</option>
+                    <option value="_self">현재 창</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>정렬 순서</th>
+            <td><input type="text" name="sortOrder" placeholder="정렬 순서 입력"></td>
+        </tr>
+        <tr>
+            <th>공개 여부</th>
+            <td>
+                <input type="hidden" name="isDisplayedOnFrontHidden" value="false">
+                <input type="checkbox" id="publicCheckbox" name="isDisplayedOnFront" value="true">
+                <label for="publicCheckbox">공개</label>
+            </td>
+        </tr>
+    </table>
+
+    <script>
+    document.getElementById('bannerFile').addEventListener('change', function() {
+        if (this.value) {
+            document.getElementById('selectedFileName').textContent = this.value.split('\\').pop();
+        } else {
+            document.getElementById('selectedFileName').textContent = '선택된 파일 없음';
+        }
+    });
+
+    </script>
+
+    <div class="link-container">
+        <button type="submit">배너 등록 하기</button>
+        <a href="/admin/banner/list.do">목록 이동</a>
+    </div>
+</form>
+
+</body>
+</html>

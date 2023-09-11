@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>배너 관리</title>
+    <style>
+        a {
+            text-decoration: underline;
+            margin-right: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+    </style>
+</head>
+<body>
+
+<div>
+    <a href="/admin/banner/add.do">배너 등록</a>
+    <a href="#" onclick="deleteSelectedBanners(event)">선택 삭제</a>
+</div>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th><input type="checkbox" id="selectAll"></th>
+        <th>NO</th>
+        <th>배너명</th>
+        <th>이미지</th>
+        <th>등록일</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="banner, iterStat : ${banners}">
+        <td><input type="checkbox" class="bannerCheckbox"></td>
+        <td th:text="${iterStat.index + 1}"></td>
+        <td><a th:href="@{'/admin/banner/update.do/' + ${banner.bannerName}}" th:text="${banner.bannerName}"></a></td>
+        <td><img th:src="'data:image/png;base64,' + ${banner.imageFile}" alt="배너 이미지" width="100"></td>
+        <td th:text="${banner.regDate}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<script src="/res/se2/js/banner/delete.js"></script>
+
+<script>
+    document.getElementById('selectAll').addEventListener('change', function() {
+        const checkboxes = document.querySelectorAll('.bannerCheckbox');
+        checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+    });
+
+</script>
+
+</body>
+</html>

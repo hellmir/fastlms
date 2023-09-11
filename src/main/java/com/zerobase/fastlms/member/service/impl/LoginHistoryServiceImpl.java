@@ -29,7 +29,7 @@ public class LoginHistoryServiceImpl implements LoginHistoryService {
     private final MemberRepository memberRepository;
     private final LoginHistoryRepository loginHistoryRepository;
 
-    private final Logger log = LoggerFactory.getLogger(LoginHistoryServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(LoginHistoryService.class);
 
     @Override
     public void saveLoginHistory(String username, String clientIp, String userAgent) {

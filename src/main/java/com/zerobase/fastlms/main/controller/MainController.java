@@ -5,6 +5,9 @@ import com.zerobase.fastlms.admin.dto.BannerDto;
 import com.zerobase.fastlms.banner.service.BannerDisplayService;
 import com.zerobase.fastlms.member.service.LoginHistoryService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,12 +23,16 @@ public class MainController {
     private final LoginHistoryService loginHistoryService;
     private final BannerDisplayService bannerDisplayService;
 
+    private static final Logger log = LoggerFactory.getLogger(MainController.class);
 
     @RequestMapping("/")
     public String index(HttpServletRequest request, Model model) {
 
         String userAgent = request.getHeader("User-Agent");
         String clientIp = getClientIP(request);
+
+        log.info(userAgent);
+        log.info(clientIp);
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 

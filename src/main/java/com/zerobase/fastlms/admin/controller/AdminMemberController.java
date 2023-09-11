@@ -54,7 +54,7 @@ public class AdminMemberController extends BaseController {
         parameter.init();
 
         MemberDto member = memberService.detail(parameter.getUserId());
-        List<LoginHistoryDto> loginHistories = loginHistoryService.getLoginHistory(parameter.getUserId());
+        List<LoginHistoryDto> loginHistories = loginHistoryService.getAllLoginHistories(parameter.getUserId());
 
         model.addAttribute("member", member);
         model.addAttribute("loginHistories", loginHistories);
